@@ -15,7 +15,7 @@ export class Ripples {
     this.strokeWidth = 3;
 
     // amplitude stuff
-    this.maxAmplitude = 100;
+    this.maxAmplitude = 200;
     this.amplitute = 0;
     this.ampAngle = 0;
     this.ampAngleSpeed = .15;
@@ -86,6 +86,7 @@ export class Ripples {
     this.amps.pop();
     for (let i = 0; i < this.num; i++) {
       this.circles[i].setAttribute("cy", this.center.y + this.amps[i]);
+      //this.circles[i].setAttribute("opacity", Math.abs(this.amps[i])/this.maxAmplitude * .5 + .5);
     }
     this.ampAngle += this.ampAngleSpeed;
     this.amplitute *= .995;

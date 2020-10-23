@@ -4,9 +4,12 @@ export class App {
   constructor(w, h){
     this.w = w;
     this.h = h;
-    this.slider = document.getElementById('tilt-slider');
+    this.tiltSlider = document.getElementById('tilt-slider');
+    this.zoomSlider = document.getElementById('zoom-slider');
     this.svg = document.getElementById("ripple-holder");
     this.ripple = new Ripples(w, h, this.svg, 150);
+    this.maxResolution = 4000;
+    this.res = this.defaultRes/2;
     
   }
 
@@ -14,7 +17,7 @@ export class App {
     console.log('app here!')
     this.initRipple();
     this.initSVGClick();
-    this.initSlider();
+    this.initSliders();
     
   }
 
@@ -33,10 +36,17 @@ export class App {
     })
   }
 
-  initSlider(){
-    this.slider.addEventListener("input", ()=>{
-      const percentage = (100 - this.slider.value)/100;
+  initSliders(){
+    this.tiltSlider.addEventListener("input", ()=>{
+      const percentage = (100 - this.tiltSlider.value)/100;
       this.ripple.tiltCircles(Number(percentage));
+    })
+
+    this.zoomSlider.addEventListener("input", ()=>{
+      const percentage = (100 - this.zoomSlider.value)/100;
+      this.res = this.maxResolution * percentage;
+      const vbString = `-${this.res/2} -${this.res/2} ${this.res} ${this.res}`
+      this.svg.setAttribute("viewBox", vbString);
     })
   }
 }
