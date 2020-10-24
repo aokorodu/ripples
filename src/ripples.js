@@ -76,10 +76,13 @@ export class Ripples {
     }
   }
 
-  drip(x = this.center.x, y = this.center.y) {
-    this.center.x = Math.round(x);
-    this.center.y = Math.round(y)
-    this.amplitute = this.maxAmplitude;
+  drip(dy) {
+    console.log(dy)
+    const newAmp = Math.abs(dy);
+    if(this.maxAmplitude < newAmp) this.maxAmplitude = newAmp;
+    //this.center.x = Math.round(x);
+    //this.center.y = Math.round(y)
+    this.amplitute = newAmp;
     this.ampAngle = 0;
     for (let i = 0; i < this.num; i++) {
       this.circles[i].setAttribute("cx", this.center.x);
