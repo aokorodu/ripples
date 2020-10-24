@@ -13,23 +13,34 @@ template.innerHTML = `
 </div>
 `
 
-class SwatchComponent extends HTMLElement{
-  constructor(){
-    console.log('swatch watch!')
+class SwatchComponent extends HTMLElement {
+  static get observedAttributes() {
+    return ['color'];
+  }
+  constructor() {
     super();
     this.color = this.getAttribute("color");
     this.type = this.getAttribute("type");
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({ mode: 'open' });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-    const swatch = this.shadowRoot.querySelector(".swatch");
-    swatch.style.backgroundColor = this.color;
+    this.swatch = this.shadowRoot.querySelector(".swatch");
+    this.swatch.style.backgroundColor = this.color;
   }
 
-  getColor(){
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.updateColor(newValue)
+  }
+
+  updateColor(newColor) {
+    this.color = newColor;
+    this.swatch.style.backgroundColor = this.color;
+  }
+
+  getColor() {
     return this.color;
   }
 
-  getType(){
+  getType() {
     return this.type;
   }
 }

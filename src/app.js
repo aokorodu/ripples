@@ -1,4 +1,5 @@
 import { Ripples } from './ripples';
+let randomColor = require('randomcolor');
 
 export class App {
   constructor(w, h){
@@ -26,6 +27,7 @@ export class App {
 
   initSwatches(){
     for(const swatch of this.swatchComponents){
+      swatch.setAttribute("color", randomColor())
       swatch.addEventListener("click", (e)=>{
         console.log(swatch.getType());
         this.ripple.colorCircles(swatch.getColor(), swatch.getType());
