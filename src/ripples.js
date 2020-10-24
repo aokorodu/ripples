@@ -18,7 +18,7 @@ export class Ripples {
     this.maxAmplitude = 200;
     this.amplitute = 0;
     this.ampAngle = 0;
-    this.ampAngleSpeed = .15;
+    this.ampAngleSpeed = (5*Math.PI)/this.num;
     this.amps = [];
 
     // svg stuff
@@ -52,6 +52,10 @@ export class Ripples {
       this.amps[i] = 0;
       this.gap *= 1.01;
     }
+  }
+
+  changeSpeed(percentage){
+    this.ampAngleSpeed = (percentage * 10*Math.PI)/this.num;
   }
 
   colorCircles(color, type) {
@@ -97,7 +101,7 @@ export class Ripples {
       //this.circles[i].setAttribute("opacity", Math.abs(this.amps[i])/this.maxAmplitude * .5 + .5);
     }
     this.ampAngle += this.ampAngleSpeed;
-    this.amplitute *= .995;
+    this.amplitute *= .9975;
     if (this.amplitute < .1) {
       this.amplitute = 0;
       this.active = false;

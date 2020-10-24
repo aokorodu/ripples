@@ -6,6 +6,7 @@ export class App {
     this.h = h;
     this.tiltSlider = document.getElementById('tilt-slider');
     this.zoomSlider = document.getElementById('zoom-slider');
+    this.speedSlider = document.getElementById('speed-slider');
     this.svg = document.getElementById("ripple-holder");
     this.ripple = new Ripples(w, h, this.svg, 150);
     this.maxResolution = 4000;
@@ -58,6 +59,11 @@ export class App {
       this.res = this.maxResolution * percentage;
       const vbString = `-${this.res/2} -${this.res/2} ${this.res} ${this.res}`
       this.svg.setAttribute("viewBox", vbString);
+    })
+
+    this.speedSlider.addEventListener("input", ()=>{
+      const percentage = this.speedSlider.value/100;
+      this.ripple.changeSpeed(percentage);
     })
   }
 }
