@@ -39,7 +39,7 @@ export class Ripples {
       const w = i * this.gap;
       const h = w;
       const elps = document.createElementNS(this.ns, "ellipse");
-      const color = this.lerpColor(this.startColor, this.endColor, i * 1.5 / this.num);
+      const color = this.lerpColor(this.startColor, this.endColor, i / this.num);
       elps.setAttribute("cx", this.center.x);
       elps.setAttribute("cy", this.center.y);
       elps.setAttribute("rx", w);
@@ -51,6 +51,14 @@ export class Ripples {
       this.svg.appendChild(elps);
       this.amps[i] = 0;
       this.gap *= 1.01;
+    }
+  }
+
+  colorCircles(color, type) {
+    type == "start" ? this.startColor = color : this.endColor = color;
+    for (let i = 0; i < this.num; i++) {
+      const color = this.lerpColor(this.startColor, this.endColor, i / this.num);
+      this.circles[i].setAttribute("stroke", color);
     }
   }
 

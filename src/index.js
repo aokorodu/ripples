@@ -1,5 +1,6 @@
 import './style.scss';
 import {App} from './app';
+import { SwatchComponent } from './swatch-component';
 
 console.log('hello world');
 const s = document.getElementById('ripple-holder')

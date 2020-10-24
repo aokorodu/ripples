@@ -10,6 +10,7 @@ export class App {
     this.ripple = new Ripples(w, h, this.svg, 150);
     this.maxResolution = 4000;
     this.res = this.defaultRes/2;
+    this.swatchComponents = document.getElementsByTagName('swatch-component');
     
   }
 
@@ -18,7 +19,17 @@ export class App {
     this.initRipple();
     this.initSVGClick();
     this.initSliders();
+    this.initSwatches();
     
+  }
+
+  initSwatches(){
+    for(const swatch of this.swatchComponents){
+      swatch.addEventListener("click", (e)=>{
+        console.log(swatch.getType());
+        this.ripple.colorCircles(swatch.getColor(), swatch.getType());
+      })
+    }
   }
 
   initRipple(){
