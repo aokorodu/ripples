@@ -46,7 +46,8 @@ export class App {
       pt.x = e.clientX;
       pt.y = e.clientY;
       const svgP = pt.matrixTransform(this.svg.getScreenCTM().inverse());
-      this.ripple.drip(svgP.x, svgP.y);
+      // this.ripple.drip(svgP.x, svgP.y);
+      this.ripple.drip(0, 0);
     })
   }
 

@@ -15,7 +15,7 @@ export class Ripples {
     this.strokeWidth = 3;
 
     // amplitude stuff
-    this.maxAmplitude = 200;
+    this.maxAmplitude = 300;
     this.amplitute = 0;
     this.ampAngle = 0;
     this.ampAngleSpeed = (5*Math.PI)/this.num;
@@ -36,7 +36,7 @@ export class Ripples {
 
   buildCircles() {
     for (let i = 0; i < this.num; i++) {
-      const w = i * this.gap;
+      const w = Math.round(i * this.gap);
       const h = w;
       const elps = document.createElementNS(this.ns, "ellipse");
       const color = this.lerpColor(this.startColor, this.endColor, i / this.num);
@@ -45,7 +45,7 @@ export class Ripples {
       elps.setAttribute("rx", w);
       elps.setAttribute("ry", h);
       elps.setAttribute("stroke", color);
-      elps.setAttribute("stroke-width", this.strokeWidth + (i / this.num * 2));
+      elps.setAttribute("stroke-width", this.strokeWidth);
       elps.setAttribute("fill", "transparent");
       this.circles.push(elps);
       this.svg.appendChild(elps);
@@ -70,15 +70,15 @@ export class Ripples {
     this.gap = this.h/2 / (this.num - 1);
     for (let i = 0; i < this.num; i++) {
       const w = i * this.gap;
-      const h = w * percentage;
+      const h = Math.round(w * percentage);
       this.circles[i].setAttribute("ry", h);
       this.gap *= 1.01;
     }
   }
 
   drip(x = this.center.x, y = this.center.y) {
-    this.center.x = x;
-    this.center.y = y
+    this.center.x = Math.round(x);
+    this.center.y = Math.round(y)
     this.amplitute = this.maxAmplitude;
     this.ampAngle = 0;
     for (let i = 0; i < this.num; i++) {
@@ -97,7 +97,7 @@ export class Ripples {
     this.amps.unshift(dy);
     this.amps.pop();
     for (let i = 0; i < this.num; i++) {
-      this.circles[i].setAttribute("cy", this.center.y + this.amps[i]);
+      this.circles[i].setAttribute("cy", Math.round(this.center.y + this.amps[i]));
       //this.circles[i].setAttribute("opacity", Math.abs(this.amps[i])/this.maxAmplitude * .5 + .5);
     }
     this.ampAngle += this.ampAngleSpeed;
