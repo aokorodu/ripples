@@ -78,8 +78,8 @@ export class Ripples {
 
   drip(dy) {
     console.log(dy)
-    const newAmp = Math.abs(dy);
-    if(this.maxAmplitude < newAmp) this.maxAmplitude = newAmp;
+    let newAmp = Math.abs(dy);
+    if(newAmp > this.maxAmplitude) newAmp = this.maxAmplitude;
     //this.center.x = Math.round(x);
     //this.center.y = Math.round(y)
     this.amplitute = newAmp;

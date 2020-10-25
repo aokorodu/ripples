@@ -10,14 +10,21 @@ export class App {
     this.speedSlider = document.getElementById('speed-slider');
     this.svg = document.getElementById("ripple-holder");
     this.ripple = new Ripples(w, h, this.svg, 150);
-    this.maxResolution = 4000;
     this.res = this.defaultRes/2;
     this.swatchComponents = document.getElementsByTagName('swatch-component');
+    this.vb_w, this.vb_h, this.vb_ratio, this.vb_w_MAX;
     
   }
 
   init(){
-    console.log('app here!')
+    console.log('app here!');
+    const vbString = this.svg.getAttribute("viewBox");
+    const vbArray = vbString.split(" ");
+    this.vb_w = Number(vbArray[2]);
+    this.vb_h = Number(vbArray[3]);
+    this.vb_ratio = this.vb_h/this.vb_w;
+    this.vb_w_MAX = this.vb_w * 3;
+    console.log(this.vb_w, this.vb_h);
     this.initRipple();
     this.initSVGClick();
     this.initSliders();
@@ -59,8 +66,10 @@ export class App {
 
     this.zoomSlider.addEventListener("input", ()=>{
       const percentage = (100 - this.zoomSlider.value)/100;
-      this.res = this.maxResolution * percentage;
-      const vbString = `-${this.res/2} -${this.res/2} ${this.res} ${this.res}`
+      const new_vb_w = percentage * this.vb_w_MAX;
+      const new_vb_h = new_vb_w * this.vb_ratio;
+      //this.res = this.vb_w_MAX * percentage;
+      const vbString = `-${new_vb_w/2} -${new_vb_h/2} ${new_vb_w} ${new_vb_h}`
       this.svg.setAttribute("viewBox", vbString);
     })
 
