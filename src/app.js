@@ -18,23 +18,29 @@ export class App {
 
   init(){
     console.log('app here!');
-    const vbString = this.svg.getAttribute("viewBox");
-    const vbArray = vbString.split(" ");
-    this.vb_w = Number(vbArray[2]);
-    this.vb_h = Number(vbArray[3]);
-    this.vb_ratio = this.vb_h/this.vb_w;
-    this.vb_w_MAX = this.vb_w * 3;
-    console.log(this.vb_w, this.vb_h);
+    this.initViewBoxProps();
     this.initRipple();
     this.initSVGClick();
     this.initSliders();
     this.initSwatches();
     
   }
+  
+  initViewBoxProps(){
+    const vbString = this.svg.getAttribute("viewBox");
+    const vbArray = vbString.split(" ");
+    this.vb_w = Number(vbArray[2]);
+    this.vb_h = Number(vbArray[3]);
+    this.vb_ratio = this.vb_h/this.vb_w;
+    this.vb_w_MAX = this.vb_w*2;
+    console.log(this.vb_w, this.vb_h);
+  }
 
   initSwatches(){
     for(const swatch of this.swatchComponents){
-      swatch.setAttribute("color", randomColor())
+      const c = randomColor({format: 'hsl' });
+      console.log(c);
+      swatch.setAttribute("color", c)
       swatch.addEventListener("click", (e)=>{
         console.log(swatch.getType());
         this.ripple.colorCircles(swatch.getColor(), swatch.getType());
@@ -65,9 +71,11 @@ export class App {
     })
 
     this.zoomSlider.addEventListener("input", ()=>{
-      const percentage = (100 - this.zoomSlider.value)/100;
-      const new_vb_w = percentage * this.vb_w_MAX;
+      const percentage = this.zoomSlider.value/100;
+      console.log('%: ', percentage)
+      const new_vb_w = percentage * (this.vb_w_MAX)/2 + (this.vb_w_MAX)/2;
       const new_vb_h = new_vb_w * this.vb_ratio;
+      console.log('new_vb_w: ', new_vb_w);
       //this.res = this.vb_w_MAX * percentage;
       const vbString = `-${new_vb_w/2} -${new_vb_h/2} ${new_vb_w} ${new_vb_h}`
       this.svg.setAttribute("viewBox", vbString);

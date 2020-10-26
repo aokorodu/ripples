@@ -36,6 +36,7 @@ $border-color: #181818;
 svg{
   border: 20px solid $border-color;
   background-color: #181818;
+  transform: translateZ(0);
   /*background-image: linear-gradient(180deg, #212121, #000000);*/
 }
 
@@ -75,7 +76,7 @@ svg{
 }
 
 .pallete-holder{
-  width: 40px;
+  width: 50px;
   min-height: 500px;
   background-color: $border-color;
   border-radius: 10px 0 0 10px;

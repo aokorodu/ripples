@@ -1,3 +1,4 @@
+var colorLerp = require('color-lerp');
 import { PVector } from './pvector';
 
 export class Ripples {
@@ -11,8 +12,10 @@ export class Ripples {
 
     // stroke stuff
     this.endColor = '#b043f5';
+    this.endColor_hsl = 'hsl(277, 90%, 61%)'
     this.startColor = '#fa903e';
-    this.strokeWidth = 3;
+    this.startColor_hsl = 'hsl(26, 95%, 61%)'
+    this.strokeWidth = 5;
 
     // amplitude stuff
     this.maxAmplitude = 300;
@@ -58,10 +61,14 @@ export class Ripples {
     this.ampAngleSpeed = (percentage * 10*Math.PI)/this.num;
   }
 
+  // color-lerp: https://www.npmjs.com/package/color-lerp/v/1.0.2
   colorCircles(color, type) {
-    type == "start" ? this.startColor = color : this.endColor = color;
+    type == "start" ? this.startColor_hsl = color : this.endColor_hsl = color;
+    // "build" colors
+    const new_hsl_colors = colorLerp(this.startColor_hsl, this.endColor_hsl, this.num, 'hex');
+    // assign colors to circles
     for (let i = 0; i < this.num; i++) {
-      const color = this.lerpColor(this.startColor, this.endColor, i / this.num);
+      const color = new_hsl_colors[i];
       this.circles[i].setAttribute("stroke", color);
     }
   }
